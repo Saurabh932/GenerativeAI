@@ -1,0 +1,25 @@
+Why your LLM inference costs are probably 3x higher than they should be 
+Most teams scale LLM inference the same way they scaled web servers — throw more GPUs at it and hope for the best.
+That's not load balancing. That's expensive guessing.
+
+Here's what actually moves the needle when you're serving models like Llama, Mistral, or GPT-class LLMs in production:
+
+𝟭. KV-Cache Aware Routing
+ Traditional round-robin load balancers treat every request the same. But LLM inference isn't stateless — the KV cache holds context from previous tokens. Route a follow-up request to a different GPU, and you lose that cache, recompute everything, and torch your latency budget.
+
+Smart routing keeps related requests on the same node whenever possible.
+
+𝟮. Prefill vs. Decode Separation
+ Prefill (processing the prompt) is compute-bound. Decode (generating tokens) is memory-bound. Running both on the same GPU pool creates resource contention that tanks throughput.
+
+Disaggregating these stages — a growing pattern in modern inference architecture — lets you scale each independently.
+
+𝟯. Dynamic Batching
+ Static batch sizes waste GPU cycles. Continuous batching (also called in-flight batching) packs requests together in real time based on actual load, dramatically improving GPU utilization and reducing time-to-first-token.
+
+𝟰. Least-Load, Not Round-Robin
+ Request complexity varies wildly — a 50-token completion and a 4,000-token generation are not equal work. Load balancers that route by actual GPU memory and compute load (not just request count) prevent hot-spotting.
+
+𝟱. Autoscaling Tied to Queue Depth, Not CPU
+ CPU/GPU utilization is a lagging indicator for LLM workloads. Queue depth and time-to-first-token are better signals for triggering scale-out decisions.
+The teams getting this right aren't just cutting infra costs — they're hitting SLAs that let them actually productionize generative AI instead of demoing it.

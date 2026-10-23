@@ -14,3 +14,11 @@ uvicorn
 requests
 langchain_huggingface
 dotenv
+chromadb
+sentence-transformers
+pypdf
+unstructured
+beautifulsoup4
+lxml
+streamlit
+tqdm
