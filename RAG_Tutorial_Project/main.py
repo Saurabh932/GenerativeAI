@@ -1,6 +1,6 @@
 from h11._abnf import chunk_size
 from dotenv import load_dotenv
-from langchain_huggingface import ChatHuggingFace, HuggingFacePipeline, HuggingFaceEmbeddings
+from langchain_huggingface import ChatHuggingFace, HuggingFacePipeline
 from langchain_community.document_loaders import TextLoader, PyPDFLoader
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -8,15 +8,15 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 load_dotenv()
 
 # data = TextLoader("document_loaders/notes.txt", encoding="utf-8")
-data = PyPDFLoader("document_loaders/Git Notes.pdf")
-doc = data.load()
+# data = PyPDFLoader("document_loaders/Git Notes.pdf")
+# doc = data.load()
 
-splitter = RecursiveCharacterTextSplitter(
-    chunk_size=1000,
-    chunk_overlap=100,
-)
+# splitter = RecursiveCharacterTextSplitter(
+#     chunk_size=1000,
+#     chunk_overlap=100,
+# )
 
-chunks = splitter.split_documents(doc)
+# chunks = splitter.split_documents(doc)
 
 template = ChatPromptTemplate.from_messages(
      [
