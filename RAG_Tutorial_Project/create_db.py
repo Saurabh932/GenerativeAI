@@ -9,7 +9,7 @@ load_dotenv()
 
 # Load the PDF
 print("Loading the PDF...\n")
-data = PyPDFLoader("document_loaders/Git Notes.pdf")
+data = PyPDFLoader("RAG_Tutorial_Project/document_loaders/Git Notes.pdf")
 doc = data.load()
 print("PDF loaded successfully...\n")
 
